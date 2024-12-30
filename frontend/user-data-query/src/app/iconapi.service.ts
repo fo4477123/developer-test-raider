@@ -11,6 +11,10 @@ export class IconapiService {
 
   constructor(private http: HttpClient) { }
 
+  getImagePath(iconName:string):string{
+    return `${this.iconUrl}/${iconName}`;
+  }
+
   getImage(iconName: string): Observable<Blob> {
     console.log(`Fetching icon: ${this.iconUrl}/${iconName}`);
     return this.http.get(`${this.iconUrl}/${iconName}`, 
@@ -19,6 +23,7 @@ export class IconapiService {
         map(response => {
           if (response.body) 
             { 
+              console.log(response.headers.get("Content-Type"));
               return new Blob([response.body], { type: 'image/png' }); 
             } 
             else { 
